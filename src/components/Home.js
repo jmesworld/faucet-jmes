@@ -181,8 +181,7 @@ class HomeComponent extends React.Component {
                 <Field type="hidden" name="denom" value="ujmes" />
                 <div className="buttonContainer">
                   <button
-                    // disabled={!this.state.verified || this.state.sending}
-                    disabled={!!errors.address}
+                    disabled={!this.state.verified || this.state.sending}
                     type="submit"
                   >
                     <i aria-hidden="true" className="material-icons">
