@@ -151,13 +151,13 @@ class HomeComponent extends React.Component {
             Please don't abuse this service—the number of available tokens is
             limited.
           </article>
-          {/* <div className="recaptcha">
+          <div className="recaptcha">
             <ReCAPTCHA
               ref={this.recaptchaRef}
-              sitekey="6Ld4w4cUAAAAAJceMYGpOTpjiJtMS_xvzOg643ix"
+              sitekey="6Le9aeolAAAAAFjwOd5CikkfLodWk5IErEjqY7g1"
               onChange={this.handleCaptcha}
             />
-          </div> */}
+          </div>
           <Formik
             initialValues={{
               address: '',
@@ -178,10 +178,11 @@ class HomeComponent extends React.Component {
                     <div className="fieldError">{errors.address}</div>
                   ) : null}
                 </div>
-                <Field type="hidden" name="denom" value="uluna" />
+                <Field type="hidden" name="denom" value="ujmes" />
                 <div className="buttonContainer">
                   <button
-                    disabled={!this.state.verified || this.state.sending}
+                    // disabled={!this.state.verified || this.state.sending}
+                    disabled={!!errors.address}
                     type="submit"
                   >
                     <i aria-hidden="true" className="material-icons">
