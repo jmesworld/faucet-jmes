@@ -16,7 +16,7 @@ import NetworkContext from '../contexts/NetworkContext';
 const validateWalletAddress = (str) => {
   try {
     const { prefix } = bech32.decode(str);
-    if (prefix !== 'terra') {
+    if (prefix !== 'jmes') {
       throw new Error('Invalid address');
     }
   } catch {
@@ -30,7 +30,7 @@ const sendSchema = Yup.object().shape({
 });
 
 const DENUMS_TO_TOKEN = {
-  uluna: 'Luna',
+  ujmes: 'JMES',
 };
 
 const REQUEST_LIMIT_SECS = 30;
@@ -72,23 +72,21 @@ class HomeComponent extends React.Component {
     }, REQUEST_LIMIT_SECS * 1000);
 
     axios
-      .post(network.faucetUrl, {
-        address: values.address,
-        denom: values.denom,
-        response: this.state.response,
-      })
+      .get(
+        `${network.faucetUrl}?address=${values.address}&denom=${values.denom}`
+      )
       .then((res) => {
-        const { amount } = res.data;
-        const response = res.data.response['tx_response'] || res.data.response;
+        console.log(res);
+        const response = res.data;
 
-        if (response.code) {
-          toast.error(`Error: ${response.raw_log || `code: ${response.code}`}`);
+        if (response.error) {
+          toast.error(`Error: ${response.message || `code: ${res.status}`}`);
         } else {
-          const url = `https://finder.terra.money/testnet/tx/${response.txhash}`;
+          const url = `http://explorer.jmes.cloud/jmes/transactions/${response.txid}`;
           toast.success(
             <div>
               <p>
-                Successfully Sent {amount / 1000000}
+                Successfully Sent {10}
                 {DENUMS_TO_TOKEN[values.denom]} to {values.address}
               </p>
               <a href={url} target="_blank" rel="noopener noreferrer">
@@ -147,11 +145,11 @@ class HomeComponent extends React.Component {
           pauseOnHover
         />
         <section>
-          <h2>Terra Testnet Faucet</h2>
+          <h2>JMES Testnet Faucet</h2>
           <article>
-            Hello intrepid spaceperson! Use this faucet to get tokens for the
-            latest Terra testnet. Please don't abuse this service—the number of
-            available tokens is limited.
+            Hello! Use this faucet to get tokens for the latest JMES testnet.
+            Please don't abuse this service—the number of available tokens is
+            limited.
           </article>
           <div className="recaptcha">
             <ReCAPTCHA
@@ -163,7 +161,7 @@ class HomeComponent extends React.Component {
           <Formik
             initialValues={{
               address: '',
-              denom: 'uluna',
+              denom: 'ujmes',
             }}
             validationSchema={sendSchema}
             onSubmit={this.handleSubmit}
@@ -200,12 +198,12 @@ class HomeComponent extends React.Component {
             )}
           </Formik>
         </section>
-        <section>
+        {/* <section>
           <h2>Don't have a testnet address?</h2>
           <article>
             There are two ways to get one. The first is by using Station, the
-            crypto wallet for Terra. If you know command-line-fu, you can also
-            generate an address with the Terra SDK.
+            crypto wallet for JMES. If you know command-line-fu, you can also
+            generate an address with the JMES SDK.
           </article>
           <div className="buttonContainer">
             <button className="light">
@@ -223,7 +221,7 @@ class HomeComponent extends React.Component {
               </span>
             </button>
           </div>
-        </section>
+        </section> */}
       </div>
     );
   }

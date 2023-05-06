@@ -70,12 +70,12 @@ var pagerdutyConfig PagerdutyConfig
 const ( // new core hasn't these yet.
 	MicroUnit              = int64(1e6)
 	fullFundraiserPath     = "m/44'/330'/0'/0/0"
-	accountAddresPrefix    = "terra"
-	accountPubKeyPrefix    = "terrapub"
-	validatorAddressPrefix = "terravaloper"
-	validatorPubKeyPrefix  = "terravaloperpub"
-	consNodeAddressPrefix  = "terravalcons"
-	consNodePubKeyPrefix   = "terravalconspub"
+	accountAddresPrefix    = "jmes"
+	accountPubKeyPrefix    = "jmespub"
+	validatorAddressPrefix = "jmesvaloper"
+	validatorPubKeyPrefix  = "jmesvaloperpub"
+	consNodeAddressPrefix  = "jmesvalcons"
+	consNodePubKeyPrefix   = "jmesvalconspub"
 )
 
 var amountTable = map[string]int64{
@@ -229,7 +229,7 @@ func (requestLog *RequestLog) dripCoin(denom string) error {
 }
 
 func checkAndUpdateLimit(db *leveldb.DB, account []byte, denom string) error {
-	address, _ := bech32.ConvertAndEncode("terra", account)
+	address, _ := bech32.ConvertAndEncode("jmes", account)
 
 	if getBalance(address) >= amountTable[denom]*2 {
 		return errors.New("amount limit exceeded")
@@ -573,7 +573,7 @@ func main() {
 	//privKey = *secp256k1.GenPrivKeyFromSecret(derivedPriv)
 	privKey = hd.Secp256k1.Generate()(derivedPriv)
 	pubk := privKey.PubKey()
-	address, err = bech32.ConvertAndEncode("terra", pubk.Address())
+	address, err = bech32.ConvertAndEncode("jmes", pubk.Address())
 	if err != nil {
 		panic(err)
 	}
@@ -590,7 +590,7 @@ func main() {
 	mux.HandleFunc("/claim", createGetCoinsHandler(db))
 
 	c := cors.New(cors.Options{
-		AllowedOrigins:   []string{"https://faucet.terra.money", "http://localhost", "localhost", "http://localhost:3000", "http://localhost:8080"},
+		AllowedOrigins:   []string{"https://faucet.jmes.cloud", "http://localhost", "localhost", "http://localhost:3000", "http://localhost:8080"},
 		AllowCredentials: true,
 	})
 
