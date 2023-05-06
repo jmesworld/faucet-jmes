@@ -151,13 +151,13 @@ class HomeComponent extends React.Component {
             Please don't abuse this service—the number of available tokens is
             limited.
           </article>
-          <div className="recaptcha">
+          {/* <div className="recaptcha">
             <ReCAPTCHA
               ref={this.recaptchaRef}
               sitekey="6Ld4w4cUAAAAAJceMYGpOTpjiJtMS_xvzOg643ix"
               onChange={this.handleCaptcha}
             />
-          </div>
+          </div> */}
           <Formik
             initialValues={{
               address: '',
