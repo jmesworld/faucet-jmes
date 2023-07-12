@@ -154,7 +154,7 @@ class HomeComponent extends React.Component {
           <div className="recaptcha">
             <ReCAPTCHA
               ref={this.recaptchaRef}
-              sitekey="6Le9aeolAAAAAFjwOd5CikkfLodWk5IErEjqY7g1"
+              sitekey="6LdVUhgnAAAAADTNYf480biOnTtcMvQpEOARp9O1"
               onChange={this.handleCaptcha}
             />
           </div>
