@@ -1,6 +1,6 @@
 export const networks = [
   {
-    chainId: 'jmes-tesnet',
-    faucetUrl: 'https://faucet-api-uopuy.ondigitalocean.app/credit',
+    chainId: 'jmes-prenet',
+    faucetUrl: 'https://jmes-faucet-api-z85ny.ondigitalocean.app/credit',
   },
 ];
