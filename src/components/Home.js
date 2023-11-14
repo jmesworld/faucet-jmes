@@ -7,11 +7,13 @@ import { Formik, Form, Field } from 'formik';
 import * as Yup from 'yup';
 import * as bech32 from 'bech32';
 import { networks } from '../config';
-
 import 'react-toastify/dist/ReactToastify.css';
 
 import '../App.scss';
 import NetworkContext from '../contexts/NetworkContext';
+
+const networkType = process.env.REACT_APP_NETWORK_TYPE;
+const siteKey = process.env.REACT_APP_SITEKEY;
 
 const validateWalletAddress = (str) => {
   try {
@@ -145,16 +147,18 @@ class HomeComponent extends React.Component {
           pauseOnHover
         />
         <section>
-          <h2>JMES Testnet Faucet</h2>
+          <h2>
+            JMES {networkType.charAt(0).toUpperCase()}
+            {networkType.slice(1)} Faucet
+          </h2>
           <article>
-            Hello! Use this faucet to get tokens for the latest JMES testnet.
-            Please don't abuse this service—the number of available tokens is
-            limited.
+            Hello! Use this faucet to get tokens. Please don't abuse this
+            service—the number of available tokens is limited.
           </article>
           <div className="recaptcha">
             <ReCAPTCHA
               ref={this.recaptchaRef}
-              sitekey="6Le9aeolAAAAAFjwOd5CikkfLodWk5IErEjqY7g1"
+              sitekey={siteKey}
               onChange={this.handleCaptcha}
             />
           </div>
@@ -171,7 +175,7 @@ class HomeComponent extends React.Component {
                 <div className="input">
                   <Field
                     name="address"
-                    placeholder="Testnet address"
+                    placeholder="Wallet address"
                     validate={validateWalletAddress}
                   />
                   {errors.address && touched.address ? (
